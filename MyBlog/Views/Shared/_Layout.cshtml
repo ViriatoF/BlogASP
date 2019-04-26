@@ -10,6 +10,18 @@
 
 </head>
 <body>
+    @{
+        if (ViewBag.DisplayCookie != null)
+        {
+            <div id="cookies-banner" @(ViewBag.DisplayCookie ? "style=display:block;" : "")>
+                <span>
+                    En poursuivant votre navigation sur ce site, vous nous autorisez à déposer des cookies. Voulez vous accepter ?
+                </span>
+                <a href="/Accueil/Cookies?accept=1" id="accept-cookies">Oui</a>
+                <a href="/Accueil/Cookies?accept=0" id="reject-cookies">Non</a>
+            </div>
+        }
+    }
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">

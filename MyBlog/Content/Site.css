@@ -3,6 +3,53 @@
     padding-bottom: 20px;
 }
 
+/* barre cookie */
+
+#cookies-banner {
+    display: none;
+    background: none repeat scroll 0% 0% #062E41;
+    padding: 0px 2.5%;
+}
+
+    #cookies-banner span {
+        display: inline-block;
+        margin: 0px;
+        padding: 7px 0px;
+        color: #EEE;
+        line-height: 23px;
+    }
+
+    #cookies-banner #reject-cookies {
+        display: inline-block;
+        background: none repeat scroll 0px 0px transparent;
+        border: medium none;
+        text-decoration: underline;
+        margin: 0px;
+        padding: 0px;
+        color: #EEE;
+    }
+
+    #cookies-banner a {
+        display: inline-block;
+        color: #EEE;
+        padding: 4px 13px;
+        margin-left: 15px;
+        background: none repeat scroll 0% 0% #084561;
+        text-decoration: none;
+    }
+
+    #cookies-banner #accept-cookies {
+        text-decoration: none;
+        background: none repeat scroll 0% 0% #EEE;
+        color: #084561;
+        padding: 4px 15px;
+        border: medium none;
+        transition: #000 0.15s ease 0s, color 0.15s ease 0s;
+        margin-top: 3px;
+    }
+
+/* fin barre cookie */
+
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;

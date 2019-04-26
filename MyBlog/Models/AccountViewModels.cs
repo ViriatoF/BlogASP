@@ -48,10 +48,14 @@ namespace MyBlog.Models
 
     public class LoginViewModel
     {
+        //[Required]
+        //[Display(Name = "Courrier électronique")]
+        //[EmailAddress]
+        //public string Email { get; set; }
+
         [Required]
-        [Display(Name = "Courrier électronique")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "Pseudo")]
+        public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -65,9 +69,20 @@ namespace MyBlog.Models
     public class RegisterViewModel
     {
         [Required]
+        [Display(Name = "Pseudo")] 
+        public string UserName { get; set; }
+
+        [Required]
         [EmailAddress]
+        [DataType(DataType.EmailAddress)]
         [Display(Name = "Courrier électronique")]
         public string Email { get; set; }
+
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Confirmer l'adresse mail")]
+        [Compare("Email", ErrorMessage = "L'adresse mail de confirmation ne correspond pas.")]
+        public string ConfirmEmail { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "La chaîne {0} doit comporter au moins {2} caractères.", MinimumLength = 6)]
