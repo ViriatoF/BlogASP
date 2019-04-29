@@ -1,0 +1,58 @@
+﻿@model MyBlog.Models.Article
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Article</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Pseudo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pseudo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Titre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Titre)
+        </dd>
+
+        <dd>
+            <img src="@Html.DisplayFor(model => model.ImageName)" alt="@Html.DisplayFor(m => m.Titre)" />
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contenu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Contenu)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Publication)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Publication)
+        </dd>
+
+        <partial name="../Commentaire/_List.cshtml" />
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

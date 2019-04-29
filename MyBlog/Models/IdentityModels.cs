@@ -25,6 +25,7 @@ namespace MyBlog.Models
         {
         }
         public DbSet<Article> Articles { get; set; }
+        public DbSet<Commentaire> Commentaires { get; set; }
 
         public static ApplicationDbContext Create()
         {

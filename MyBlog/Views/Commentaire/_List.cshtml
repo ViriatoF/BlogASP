@@ -1,10 +1,4 @@
-﻿@model IEnumerable<MyBlog.Models.Article>
-
-@{
-    ViewBag.Title = "Index";
-}
-
-<h2>Index</h2>
+﻿@model IEnumerable<MyBlog.Models.Commentaire>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -12,13 +6,16 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Titre)
+            @Html.DisplayNameFor(model => model.Pseudo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Contenu)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ImageName)
+            @Html.DisplayNameFor(model => model.Publication)
         </th>
         <th></th>
     </tr>
@@ -26,13 +23,16 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Titre)
+            @Html.DisplayFor(modelItem => item.Pseudo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Contenu)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ImageName)
+            @Html.DisplayFor(modelItem => item.Publication)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |

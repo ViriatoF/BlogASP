@@ -1,0 +1,80 @@
+﻿@model IEnumerable<MyBlog.Models.Article>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Pseudo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Titre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Contenu)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pseudo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Titre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Contenu)
+        </td>
+        <td>
+            @{
+                if (!string.IsNullOrWhiteSpace(item.ImageName))
+                {
+                    <img src="~/Content/Upload/@item.ImageName" alt="@Path.GetFileNameWithoutExtension(item.ImageName)" />
+                }
+            }
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>
+
+<footer class="pagination-nav">
+    <ul>
+        <li>
+            @if ((int)ViewBag.Page > 0)
+            {
+                @Html.ActionLink("Précédent", "List", "Article", new { page = ViewBag.Page - 1 }, new { @class = "button" })
+            }
+        </li>
+        <li>
+            @if (Model.Count() == MyBlog.Controllers.ArticleController.ARTICLEPERPAGE || ViewBag.Page > 0)
+            {
+                using (Html.BeginForm("List", "Article", FormMethod.Get))
+                {
+                    @Html.TextBox("page", 0, new { type = "number" })
+                    <button type="submit">Aller à</button>
+                }
+            }
+        </li>
+        <li>
+            @if (Model.Count() == MyBlog.Controllers.ArticleController.ARTICLEPERPAGE)
+            {
+                @Html.ActionLink("Suivant", "List", "Article", new { page = ViewBag.Page + 1 }, new { @class = "button" })
+            }
+        </li>
+    </ul>
+</footer>
