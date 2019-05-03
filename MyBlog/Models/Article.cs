@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace MyBlog.Models
         public Article()
         {
             bool EstPublie = true;
+            Publication = DateTime.Now; // On donne une valeur automatique à la publicaton qui sera à la date du jour
         }
 
         [Key]
@@ -36,10 +38,11 @@ namespace MyBlog.Models
         [Required(AllowEmptyStrings = false)]
         [DataType(DataType.MultilineText)]
         public string Contenu { get; set; }
-        
+
+        [DisplayName("Illustration")]
         public string ImageName { get; set; }
 
-        [DataType(DataType.Date)]
+        [Column("Date_publication",TypeName ="datetime2")] //On force le type de façon à ne pas ressortir d'erreur de type
         public DateTime Publication { get; set; }
 
         public bool EstPublie { get; set; }

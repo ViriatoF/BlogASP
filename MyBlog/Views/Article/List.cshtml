@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<MyBlog.Models.Article>
+@using GridMvc.Html
 
 @{
     ViewBag.Title = "List";
@@ -6,75 +7,141 @@
 
 <h2>List</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Pseudo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Titre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Contenu)
-        </th>
-        <th></th>
-    </tr>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.btn-delete-article').click(function (event) {
+                var boutonClique = $(event.target).closest('button');
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Pseudo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Titre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Contenu)
-        </td>
-        <td>
-            @{
-                if (!string.IsNullOrWhiteSpace(item.ImageName))
+                var idASupprimer = $(boutonClique).attr('data-id');
+
+                $.ajax({
+                    url: '@Url.Action("Delete")',
+                    type: 'POST',
+                    data: { id: idASupprimer },
+                    success: function (data) {
+                        if (data.Suppression == "OK") {
+                            $(boutonClique).closest("tr").fadeOut(400, function () {
+                                $(this).remove();
+                            })
+                        }
+                    }
+                })
+            });
+        });
+    </script>
+    }
+
+    @*<p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Pseudo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Titre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Contenu)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Publication)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EstPublie)
+                </th>
+                <th></th>
+            </tr>
+
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pseudo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Titre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Contenu)
+                </td>
+                <td>
+                    @{
+                        if (!string.IsNullOrWhiteSpace(item.ImageName))
+                        {
+                            <img src="~/Content/Upload/@item.ImageName" alt="@Path.GetFileNameWithoutExtension(item.ImageName)" class="img-thumbnail"/>
+                        }
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Publication)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EstPublie)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                </td>
+            </tr>
+        }
+        </table>
+
+        <footer class="pagination-nav">
+            <ul>
+
+                @if ((int)ViewBag.Page > 0)
                 {
-                    <img src="~/Content/Upload/@item.ImageName" alt="@Path.GetFileNameWithoutExtension(item.ImageName)" />
-                }
-            }
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
+                <li>
+                    @Html.ActionLink("Précédent", "List", "Article", new { page = ViewBag.Page - 1 }, new { @class = "btn btn-default" })
+                </li>
+                        }
 
-</table>
+                    @if (Model.Count() == MyBlog.Controllers.ArticleController.ARTICLEPERPAGE || ViewBag.Page > 2 0)
+                    {
+                        using (Html.BeginForm("List", "Article", FormMethod.Get))
+                        {
+                            <li>
+                                @Html.TextBox("page", 0, new { type = "number" })
+                                <button type="submit">Aller à</button>
+                            </li>
+                        }
+                    }
 
-<footer class="pagination-nav">
-    <ul>
-        <li>
-            @if ((int)ViewBag.Page > 0)
-            {
-                @Html.ActionLink("Précédent", "List", "Article", new { page = ViewBag.Page - 1 }, new { @class = "button" })
-            }
-        </li>
-        <li>
-            @if (Model.Count() == MyBlog.Controllers.ArticleController.ARTICLEPERPAGE || ViewBag.Page > 0)
-            {
-                using (Html.BeginForm("List", "Article", FormMethod.Get))
-                {
-                    @Html.TextBox("page", 0, new { type = "number" })
-                    <button type="submit">Aller à</button>
-                }
-            }
-        </li>
-        <li>
-            @if (Model.Count() == MyBlog.Controllers.ArticleController.ARTICLEPERPAGE)
-            {
-                @Html.ActionLink("Suivant", "List", "Article", new { page = ViewBag.Page + 1 }, new { @class = "button" })
-            }
-        </li>
-    </ul>
-</footer>
+
+                    @if (Model.Count() == MyBlog.Controllers.ArticleController.ARTICLEPERPAGE)
+                    {
+                        <li>
+                            @Html.ActionLink("Suivant", "List", "Article", new { page = ViewBag.Page + 1 }, new { @class = "btn btn-default" })
+                        </li>
+                    }
+                </ul>
+        </footer>*@
+
+    @Html.Grid(Model).Columns(columns =>
+    {
+            columns.Add(p => p.Titre);
+            columns.Add(p => p.Pseudo)
+                                 .Sortable(true);
+
+            columns.Add(p => p.Contenu);
+            columns.Add(p => p.Publication)
+                                .Sortable(true);
+
+            columns.Add(p=>p.ImageName)
+                                .Encoded(false)
+                                .Sanitized(false)
+                                .RenderValueAs( p=>@<img src="~/Content/Upload/@p.ImageName" alt="@p.ImageName" class="img-thumbnail" />);
+
+        columns.Add()
+            .Encoded(false)
+            .Sanitized(false)
+            .RenderValueAs(p => Html.ActionLink("Editer", "Edit", new { id = p.ID }));
+
+        columns.Add()
+            .Encoded(false)
+            .Sanitized(false)
+            .RenderValueAs(p => "<button class='btn btn-default btn-delete-article' data-id='" + p.ID + "'> <span class='glyphicon glyphicon-remove-circle' /> </button>");
+    }).WithPaging(5)

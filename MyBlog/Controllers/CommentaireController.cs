@@ -21,7 +21,7 @@ namespace MyBlog.Controllers
 
         public readonly static int COMPERPAGE = 5;
 
-        public ActionResult List(int PageCom = 0)
+        public ActionResult _List(int PageCom = 0)
         {
             try
             {
@@ -39,22 +39,22 @@ namespace MyBlog.Controllers
         }
 
         //GET: Commentaire/Create
-        public ActionResult Create()
+        public ActionResult _Create()
         {
             return View();
         }
 
         //POST: Commentaire/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(Commentaire com)
-        {
-            if (ModelState.IsValid)
-            {
-                return View(com);
-            }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create(Commentaire com)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        return View(com);
+        //    }
 
-            Commentaire com = new Commentaire();
-        }
+        //    Commentaire com = new Commentaire();
+        //}
     }
 }

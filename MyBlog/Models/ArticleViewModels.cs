@@ -11,7 +11,7 @@ namespace MyBlog.Models
     {
         [Required(AllowEmptyStrings = false)]
         [StringLength(128)]
-        [RegularExpression(@"^[^,\.\^+$")]
+        //[RegularExpression(@"^[^,\.\^+$")]
         [DataType(DataType.Text)]
         public string Pseudo { get; set; }
         /// <summary>

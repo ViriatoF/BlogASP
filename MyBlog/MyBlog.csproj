@@ -45,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GridMvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Grid.Mvc.3.0.0\lib\net40\GridMvc.dll</HintPath>
+    </Reference>
     <Reference Include="Json.Net, Version=1.0.16.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Json.Net.1.0.16\lib\netstandard2.0\Json.Net.dll</HintPath>
     </Reference>
@@ -187,6 +190,39 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904271404243_InitialCreate.cs" />
+    <Compile Include="Migrations\201904271404243_InitialCreate.Designer.cs">
+      <DependentUpon>201904271404243_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904291413273_modif articleController.cs" />
+    <Compile Include="Migrations\201904291413273_modif articleController.Designer.cs">
+      <DependentUpon>201904291413273_modif articleController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904291437439_add comments.cs" />
+    <Compile Include="Migrations\201904291437439_add comments.Designer.cs">
+      <DependentUpon>201904291437439_add comments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904291449537_date article.cs" />
+    <Compile Include="Migrations\201904291449537_date article.Designer.cs">
+      <DependentUpon>201904291449537_date article.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904291504072_datetime changed.cs" />
+    <Compile Include="Migrations\201904291504072_datetime changed.Designer.cs">
+      <DependentUpon>201904291504072_datetime changed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904301556353_image.cs" />
+    <Compile Include="Migrations\201904301556353_image.Designer.cs">
+      <DependentUpon>201904301556353_image.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904301649092_image2.cs" />
+    <Compile Include="Migrations\201904301649092_image2.Designer.cs">
+      <DependentUpon>201904301649092_image2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904301735582_image3.cs" />
+    <Compile Include="Migrations\201904301735582_image3.Designer.cs">
+      <DependentUpon>201904301735582_image3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\ArticleJSONRepository.cs" />
@@ -206,14 +242,18 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Gridmvc.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="App_Data\liste_article_tuto_full.json" />
+    <Content Include="Grid.mvc.readme" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\gridmvc.js" />
+    <Content Include="Scripts\gridmvc.lang.ru.js" />
+    <Content Include="Scripts\gridmvc.min.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -258,14 +298,17 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Article\Index.cshtml" />
+    <Content Include="Views\Commentaire\_List.cshtml" />
     <Content Include="Views\Article\List.cshtml" />
     <Content Include="Views\Article\Create.cshtml" />
     <Content Include="Views\Article\Details.cshtml" />
-    <Content Include="Views\Commentaire\_List.cshtml" />
-    <Content Include="Views\Commentaire\_Create.cshtml" />
+    <Content Include="Views\Shared\_GridPager.cshtml" />
+    <Content Include="Views\Shared\_Grid.cshtml" />
+    <Content Include="Views\Article\Edit.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Content\Upload\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -278,6 +321,32 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201904271404243_InitialCreate.resx">
+      <DependentUpon>201904271404243_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904291413273_modif articleController.resx">
+      <DependentUpon>201904291413273_modif articleController.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904291437439_add comments.resx">
+      <DependentUpon>201904291437439_add comments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904291449537_date article.resx">
+      <DependentUpon>201904291449537_date article.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904291504072_datetime changed.resx">
+      <DependentUpon>201904291504072_datetime changed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904301556353_image.resx">
+      <DependentUpon>201904301556353_image.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904301649092_image2.resx">
+      <DependentUpon>201904301649092_image2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904301735582_image3.resx">
+      <DependentUpon>201904301735582_image3.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

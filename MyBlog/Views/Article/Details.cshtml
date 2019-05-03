@@ -26,10 +26,6 @@
             @Html.DisplayFor(model => model.Titre)
         </dd>
 
-        <dd>
-            <img src="@Html.DisplayFor(model => model.ImageName)" alt="@Html.DisplayFor(m => m.Titre)" />
-        </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Contenu)
         </dt>
@@ -38,6 +34,14 @@
             @Html.DisplayFor(model => model.Contenu)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageName)
+        </dt>
+
+        <dd>
+            <img src="../../Content/Upload/ @Html.DisplayFor(model => model.ImageName)" alt="" />
+            
+        </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.Publication)
@@ -47,8 +51,13 @@
             @Html.DisplayFor(model => model.Publication)
         </dd>
 
-        <partial name="../Commentaire/_List.cshtml" />
+        <dt>
+            @Html.DisplayNameFor(model => model.EstPublie)
+        </dt>
 
+        <dd>
+            @Html.DisplayFor(model => model.EstPublie)
+        </dd>
 
     </dl>
 </div>
