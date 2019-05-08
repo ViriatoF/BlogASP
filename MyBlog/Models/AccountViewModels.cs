@@ -48,13 +48,9 @@ namespace MyBlog.Models
 
     public class LoginViewModel
     {
-        //[Required]
-        //[Display(Name = "Courrier électronique")]
-        //[EmailAddress]
-        //public string Email { get; set; }
-
+        
         [Required]
-        [Display(Name = "Pseudo")]
+        [Display(Name = "Identifiant")]
         public string UserName { get; set; }
 
         [Required]
@@ -68,8 +64,17 @@ namespace MyBlog.Models
 
     public class RegisterViewModel
     {
+        public RegisterViewModel()
+        {
+            UserRoles = "Abonné";
+        }
+
         [Required]
-        [Display(Name = "Pseudo")] 
+        [Display(Name = "Roles")]
+        public string UserRoles { get; set; }
+
+        [Required]
+        [Display(Name = "Nom d'utilisateur")] 
         public string UserName { get; set; }
 
         [Required]

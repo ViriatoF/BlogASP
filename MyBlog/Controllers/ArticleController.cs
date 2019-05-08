@@ -9,6 +9,8 @@ using System.IO;
 using Slugify;
 using System.Net;
 using System.Data.Entity;
+using Microsoft.AspNet.Identity;
+using System.Text.RegularExpressions;
 
 namespace MyBlog.Controllers
 {
@@ -39,6 +41,7 @@ namespace MyBlog.Controllers
         public readonly static int ARTICLEPERPAGE = 5;
 
         // GET: List
+        [AllowAnonymous]
         public ActionResult List(int Page = 0)
         {
             try
@@ -63,19 +66,24 @@ namespace MyBlog.Controllers
         // GET: Article/Create
         public ActionResult Create()
         {
+            var user = User.Identity;
+            ViewBag.id = user.GetUserId();
+            ViewBag.User =  user.GetUserName();
             return View();
         }
 
         private static string[] AcceptedTypes = new string[] { "image/jpeg", "image/png" };
         private static string[] AcceptedExt = new string[] { "jpeg", "jpg", "png", "gif" };
         private static string UFileName = "";
+        private static string imageFileName = "";
 
-
+        #region Create controller with image
         //POST: Article/Create
-        [HttpPost]
+        [HttpPost, ActionName("Create")]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include ="Pseudo,Titre,Contenu,Image")] ArticleViewModels articleVm)
+        public ActionResult Create( [Bind(Include = "Pseudo, Titre, Contenu, Image")]ArticleViewModels articleVm)
         {
+            
             if (!ModelState.IsValid)
             {
                 return View(articleVm);
@@ -98,8 +106,13 @@ namespace MyBlog.Controllers
                 }
                 try
                 {
+                    //Afin d'éviter les doublons de nom de fichier on leur attribut un identifiant unique avec GUID
+                    Guid id = Guid.NewGuid();
                     UFileName = Path.GetFileName(articleVm.Image.FileName);
-                    string ImagePath = Path.Combine(Server.MapPath("~/Content/Upload/"), UFileName);
+                    // On nettoie le nom du fichier en remplacant les caractères spéciaux par... be rien en fait, on les supprime et on passe le résultat en minuscule
+                    string valeurSortie = Regex.Replace(UFileName, "[éèà' !?ê]", "").ToLower();
+                    imageFileName = id.ToString() + "-" + valeurSortie;
+                    string ImagePath = Path.Combine(Server.MapPath("~/Content/Upload/"), imageFileName);
                     articleVm.Image.SaveAs(ImagePath);
                     using (MemoryStream ms = new MemoryStream())
                     {
@@ -116,13 +129,14 @@ namespace MyBlog.Controllers
                 if (HasError)
                     return View(articleVm.Image);
             }
+            
 
             Article article = new Article
             {
                 Pseudo = articleVm.Pseudo,
                 Titre = articleVm.Titre,
                 Contenu = articleVm.Contenu,
-                ImageName = UFileName
+                ImageName = imageFileName
             };
 
             Bdd.Articles.Add(article);
@@ -130,6 +144,7 @@ namespace MyBlog.Controllers
             return RedirectToAction("List", "Article");
 
         }
+        #endregion
 
         // GET: Article/Edit/5
         public ActionResult Edit(int? id)

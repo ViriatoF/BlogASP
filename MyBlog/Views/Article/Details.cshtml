@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "Details";
+    ViewBag.DisplayYes = "Yes";
+    ViewBag.DisplayNo = "No";
 }
 
 <h2>Details</h2>
@@ -39,7 +41,7 @@
         </dt>
 
         <dd>
-            <img src="../../Content/Upload/ @Html.DisplayFor(model => model.ImageName)" alt="" />
+            <img src="~/Content/Upload/@Html.DisplayFor(model => model.ImageName)" alt="" class="img-rounded" />
             
         </dd>
 
@@ -56,12 +58,34 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.EstPublie)
+            @{
+                    if (Model.EstPublie == true)
+                    {
+                        @ViewBag.DisplayYes;
+                    }
+                    else
+                    {
+                        @ViewBag.DisplayNo;
+                    }
+                }
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @{ 
+
+        if(User.Identity.IsAuthenticated && User.Identity.Name == Model.Pseudo)
+        {
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) 
+            <br />
+            @Html.ActionLink("Back to List", "List");
+
+        }
+        else
+        {
+            @Html.ActionLink("Back to List", "List");
+        }
+    }
+    
 </p>

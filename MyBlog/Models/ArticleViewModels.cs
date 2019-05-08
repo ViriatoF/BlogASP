@@ -9,6 +9,7 @@ namespace MyBlog.Models
 {
     public class ArticleViewModels
     {
+
         [Required(AllowEmptyStrings = false)]
         [StringLength(128)]
         //[RegularExpression(@"^[^,\.\^+$")]
