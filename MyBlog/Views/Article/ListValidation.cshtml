@@ -1,23 +1,22 @@
-﻿@model IEnumerable<MyBlog.Models.Commentaire>
+﻿@model IEnumerable<MyBlog.Models.Article>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+@{
+    ViewBag.Title = "ListValidation";
+}
+
+<h2>Articles en attente de validation</h2>
+
+<table class="table table-hover">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Pseudo)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Contenu)
+            @Html.DisplayNameFor(model => model.Titre)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Publication)
         </th>
-        <th></th>
     </tr>
 
 @foreach (var item in Model) {
@@ -26,18 +25,14 @@
             @Html.DisplayFor(modelItem => item.Pseudo)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Contenu)
+            @Html.DisplayFor(modelItem => item.Titre)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Publication)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) 
         </td>
     </tr>
 }

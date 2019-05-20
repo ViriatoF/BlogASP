@@ -18,7 +18,12 @@
     @Html.HiddenFor(model => model.ID)
     @Html.HiddenFor(model => model.Pseudo)
     @Html.HiddenFor(model => model.ImageName)
-    @Html.HiddenFor(model => model.EstPublie)
+
+    @if (User.IsInRole("Abonné") || User.IsInRole("Auteur"))
+    {
+        @Html.HiddenFor(model => model.EstPublie)
+
+    }
 
 
     <div class="form-group">
@@ -36,6 +41,18 @@
             @Html.ValidationMessageFor(model => model.Contenu, "", new { @class = "text-danger" })
         </div>
     </div>
+
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="form-group">
+            @Html.LabelFor(model => model.EstPublie, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.CheckBoxFor(model => model.EstPublie, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.EstPublie, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    }
+
 
 
     <div class="form-group">

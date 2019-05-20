@@ -33,10 +33,10 @@ namespace MyBlog.Models
         [Required(AllowEmptyStrings = false)]
         [DataType(DataType.MultilineText)]
         public string Contenu { get; set; }
-
         
         [Column("Date_publication",TypeName = "datetime2")]
         public DateTime Publication { get; set; }
 
+        public Article Parent { get; set; }
     }
 }

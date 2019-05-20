@@ -1,0 +1,27 @@
+﻿@model IEnumerable<MyBlog.Models.Commentaire>
+
+<div id="comments">
+    @foreach (var item in Model)
+    {
+        <article>
+            <section>
+                <h4>@Html.DisplayFor(modelItem => item.Pseudo) <small>@Html.DisplayFor(modelItem => item.Publication)</small></h4>
+                <p>
+                    @Html.DisplayFor(modelItem => item.Contenu)
+                </p>
+            </section>
+            <footer>
+                @if (User.Identity.IsAuthenticated && User.Identity.Name == item.Pseudo || User.IsInRole("Admin"))
+                {
+                <div>
+                    @*@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |*@
+
+                    <button class="btn btn-danger btn-delete-com" data-id="@item.ID"><span class="glyphicon glyphicon-remove"></span>  Supprimer</button>
+                </div>
+                }
+            </footer>
+
+        </article>
+       
+    }
+</div>

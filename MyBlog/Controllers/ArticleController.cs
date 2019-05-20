@@ -26,6 +26,28 @@ namespace MyBlog.Controllers
             return View();
         }
 
+        #region Vue partielle des derniers articles parus
+        [ChildActionOnly]
+        [AllowAnonymous]
+        public ActionResult _LastArticles()
+        {
+            List<Article> liste = Bdd.Articles.Where(a => a.EstPublie).OrderByDescending(a => a.Publication).Take(6).ToList();
+
+            return PartialView("_LastArticles",liste);
+        }
+        #endregion
+
+        #region ListValidation for admin
+        [Authorize(Roles ="Admin")]
+        public ActionResult ListValidation()
+        {
+            List<Article> liste = Bdd.Articles.Where(a => !a.EstPublie).OrderBy(a => a.Publication).ToList();
+
+            return View(liste);
+        }
+        #endregion
+
+        #region Details
         // GET: Article/Details/5
         [AllowAnonymous]
         public ActionResult Details(int? id)
@@ -37,9 +59,11 @@ namespace MyBlog.Controllers
             }
             return View(CurrentArticle);
         }
+        #endregion
 
-        public readonly static int ARTICLEPERPAGE = 5;
+        //public readonly static int ARTICLEPERPAGE = 5;
 
+        #region List articles with gridmvc
         // GET: List
         [AllowAnonymous]
         public ActionResult List(int Page = 0)
@@ -47,7 +71,7 @@ namespace MyBlog.Controllers
             try
             {
                 //Si on utilise gridmvc
-                List<Article> liste = Bdd.Articles.ToList();
+                List<Article> liste = Bdd.Articles.Where(art => art.EstPublie).ToList();
                                                   //Si on n'utilise pas gridmvc, on retire le .tolist() et on ajoute ce qui est dessous
 
                                                     //.Where(article=>article.EstPublie)
@@ -62,15 +86,17 @@ namespace MyBlog.Controllers
                 return View(new List<Article>());
             }
         }
+        #endregion
 
+        #region Create Get
         // GET: Article/Create
         public ActionResult Create()
         {
             var user = User.Identity;
-            ViewBag.id = user.GetUserId();
             ViewBag.User =  user.GetUserName();
             return View();
         }
+        #endregion
 
         private static string[] AcceptedTypes = new string[] { "image/jpeg", "image/png" };
         private static string[] AcceptedExt = new string[] { "jpeg", "jpg", "png", "gif" };
@@ -138,7 +164,7 @@ namespace MyBlog.Controllers
                 Contenu = articleVm.Contenu,
                 ImageName = imageFileName
             };
-
+            
             Bdd.Articles.Add(article);
             Bdd.SaveChanges();
             return RedirectToAction("List", "Article");
@@ -146,6 +172,7 @@ namespace MyBlog.Controllers
         }
         #endregion
 
+        #region Edit Get
         // GET: Article/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -163,7 +190,9 @@ namespace MyBlog.Controllers
 
             return View(article);
         }
+        #endregion
 
+        #region Edit POST
         // POST: Article/Edit/5
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
@@ -178,21 +207,21 @@ namespace MyBlog.Controllers
             }
             return View(article);
         }
-        
+        #endregion
 
+        #region Delete
         // POST: Article/Delete/5
         [HttpPost]
         public JsonResult Delete(int id)
         {
-            //Article article = Bdd.Articles.Single(p => p.ID == id);
             Article article = Bdd.Articles.Find(id);
             Bdd.Articles.Remove(article);
             Bdd.SaveChanges();
 
             return Json(new { Suppression = "OK"});
         }
+        #endregion
 
-        
 
     }
 }

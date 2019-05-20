@@ -1,0 +1,25 @@
+﻿@model IEnumerable<MyBlog.Models.Article>
+<main>
+    <h2>Les derniers articles parus</h2>
+
+    <div id="ArtHome">
+        @foreach (var item in Model)
+        {
+            <article class="LastArt col-lg-4 col-md-4 ">
+                <header>
+                    <h3>@Html.DisplayFor(modelItem => item.Titre)</h3>
+                    <img src="~/Content/Upload/@Html.DisplayFor(modelItem => item.ImageName)" alt="" class="img-responsive" />
+                </header>
+                <section>
+                    <p>@Html.DisplayFor(modelItem => item.Contenu)</p>
+                </section>
+                <aside>
+                    <span>Auteur : @Html.DisplayFor(modelItem => item.Pseudo)</span><br /><hr />
+                    <small>Article du : @Html.DisplayFor(modelItem => item.Publication)</small>
+                </aside>
+            </article>
+        }
+    </div>
+</main>
+
+

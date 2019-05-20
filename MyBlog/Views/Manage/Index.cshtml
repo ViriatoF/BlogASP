@@ -7,6 +7,13 @@
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
+    <h4>Gestion des roles</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dd>
+            @Html.ActionLink("Gestion des roles", "Index", "Role")
+        </dd>
+    </dl>
     <h4>Changer les paramètres de votre compte</h4>
     <hr />
     <dl class="dl-horizontal">
@@ -23,11 +30,11 @@
             }
             ]
         </dd>
-        <dt>Connexions externes :</dt>
+        @*<dt>Connexions externes :</dt>
         <dd>
             @Model.Logins.Count [
             @Html.ActionLink("Gérer", "ManageLogins") ]
-        </dd>
+        </dd>*@
         @*
             Les numéros de téléphone peuvent être utilisés comme second facteur de vérification dans un système d'authentification à 2 facteurs.
              
@@ -56,12 +63,12 @@
                 }
             </dd>
         *@
-        <dt>Authentification à 2 facteurs :</dt>
+        @*<dt>Authentification à 2 facteurs :</dt>
         <dd>
             <p>
                 Aucun fournisseur d'authentification à deux facteurs n'est configuré. Consultez <a href="https://go.microsoft.com/fwlink/?LinkId=403804">cet article</a>
                 pour plus de détails sur la configuration de cette application ASP.NET afin qu'elle prenne en charge l'authentification à deux facteurs.
-            </p>
+            </p>*@
             @*@if (Model.TwoFactor)
                 {
                     using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -81,7 +88,7 @@
                         <input type="submit" value="Activer" class="btn btn-link" />
                         </text>
                     }
-                }*@
-        </dd>
+                }
+        </dd>*@
     </dl>
 </div>

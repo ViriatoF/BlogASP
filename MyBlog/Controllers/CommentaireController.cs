@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.IO;
+using Microsoft.AspNet.Identity;
 
 namespace MyBlog.Controllers
 {
@@ -19,42 +20,85 @@ namespace MyBlog.Controllers
             return View();
         }
 
-        public readonly static int COMPERPAGE = 5;
-
-        public ActionResult _List(int PageCom = 0)
+        #region _List comments
+        [AllowAnonymous]
+        [ChildActionOnly]
+        public ActionResult _List(int id)
         {
             try
             {
-                List<Commentaire> Liste = Bdd.Commentaires
-                                                             .OrderByDescending(com => com.Publication)
-                                                             .Skip(PageCom * COMPERPAGE)
-                                                             .Take(COMPERPAGE).ToList();
-                ViewBag.Page = PageCom;
-                return View(Liste);
+                var AuthorId = Bdd.Articles.Find(id);
+                int authorNumb = AuthorId.ID;
+
+                //List<Commentaire> Liste = Bdd.Commentaires.ToList();
+                //var ListeTri = Liste.Find(c => c.Parent.ID == authorNumb);
+
+                var liste = from c in Bdd.Commentaires
+                            where c.Parent.ID == authorNumb
+                            orderby c.Publication descending
+                            select c;
+
+                return PartialView("_ListComments", liste);
             }
             catch
             {
-                return View(new List<Commentaire>());
+                return View();
             }
         }
+        #endregion
 
+        #region Create GET
         //GET: Commentaire/Create
+        [ChildActionOnly]
         public ActionResult _Create()
         {
+            
+            //ViewBag.UserMail = UserMail;
+            
+
+            return PartialView();
+        }
+        #endregion
+
+        #region Create POST
+        //POST: Commentaire/Create
+        [HttpPost, ActionName("_Create")]
+        [ValidateAntiForgeryToken]
+        //[ChildActionOnly]
+        public ActionResult _Create(int id, [Bind(Include = "Pseudo, Email,Contenu ")] Commentaire com)
+        {
+
+            //var user = User.Identity;
+            //ApplicationDbContext context = new ApplicationDbContext();
+            //var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            //var UserMail = userManager.GetEmail(user.GetUserId());
+            //var userName = User.Identity.GetUserName();
+            com.Parent = Bdd.Articles.Find(id);
+            //com.Pseudo = userName;
+            //com.Email = UserMail;
+            //com.Parent = Bdd.Articles.Include("Parent").Where(c => c.ID == id).FirstOrDefault();
+
+            if (ModelState.IsValid)
+            {
+                Bdd.Commentaires.Add(com);
+                Bdd.SaveChanges();
+                return RedirectToAction("Details", "Article", routeValues: new { id });
+            }
+
             return View();
         }
+        #endregion
 
-        //POST: Commentaire/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create(Commentaire com)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        return View(com);
-        //    }
+        #region Delete Commentaire
+        [HttpPost]
+        public JsonResult Delete(int id)
+        {
+            Commentaire com = Bdd.Commentaires.Find(id);
+            Bdd.Commentaires.Remove(com);
+            Bdd.SaveChanges();
 
-        //    Commentaire com = new Commentaire();
-        //}
+            return Json(new { Suppression = "OK" });
+        }
+        #endregion
     }
 }

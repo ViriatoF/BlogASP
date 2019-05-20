@@ -1,10 +1,67 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    font-family: 'Baloo Bhai', cursive;
+    
 }
 
-/* barre cookie */
+.navbar-right{
+    margin-right: 0;
+}
 
+
+/*Bouton de gestion ADMIN*/
+#gestion-btn{
+    color: darkorange;
+}
+
+#gestion-btn:hover{
+    color: red;
+}
+
+/*-------------------Home/ Articles------------------------------*/
+main h2{
+    border-bottom: 5px solid rgba(33, 32, 32, 0.80);
+    border-bottom-right-radius: 12px;
+}
+
+#ArtHome{
+    display: flex;
+    flex-wrap:wrap;
+}
+
+/*Home/Last Articles*/
+.LastArt{
+    margin: 2em 0;
+    padding: 1.2em;
+}
+
+.LastArt header, .LastArt section, .LastArt aside{
+    margin: 2em 0;
+}
+
+/*Home/Last Articles/ img*/
+.LastArt header img{
+    height: 14em;
+    width: auto;
+    text-align: center;
+}
+
+
+/*Home/Last Articles/ contenu*/
+.LastArt section p{
+    height: 7em;
+    overflow: hidden;
+}
+
+footer{
+    /*position: absolute;*/
+    bottom:0px;
+}
+/*-------------------------------Fin Home/ Articles---------------------------------------*/
+
+
+/* ---------------------------barre cookie ---------------------------------------*/
 #cookies-banner {
     display: none;
     background: none repeat scroll 0% 0% #062E41;
@@ -47,8 +104,7 @@
         transition: #000 0.15s ease 0s, color 0.15s ease 0s;
         margin-top: 3px;
     }
-
-/* fin barre cookie */
+/* ----------------------------fin barre cookie-------------------------- */
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
@@ -69,3 +125,34 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+/*--------- Page de détails d'un article-----------*/
+#comments{
+    display: flex;
+    flex-direction: column;
+}
+
+    #comments article {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 2em 0;
+        border-bottom: 1px solid #808080;
+    }
+
+#comments article section {
+    width: 70%;
+}
+
+#artOptions {
+    float: right;
+}
+
+.img-responsive{
+    width: 100%;
+}
+
+/*------------Fin Page de détails d'un article--------------*/
+

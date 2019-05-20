@@ -2,52 +2,64 @@
 
 @{
     ViewBag.Title = "Details";
-    ViewBag.DisplayYes = "Yes";
-    ViewBag.DisplayNo = "No";
+    ViewBag.DisplayYes = "oui";
+    ViewBag.DisplayNo = "En attente de validation.";
 }
 
-<h2>Details</h2>
+<h2> @Html.DisplayFor(model => model.Titre)</h2>
+<small>Auteur : <em>@Html.DisplayFor(model => model.Pseudo)</em></small>
+<p id="artOptions">
+    @{
 
+        if (User.Identity.IsAuthenticated && User.Identity.Name == Model.Pseudo || User.IsInRole("Admin"))
+        {
+            <span>@Html.ActionLink("Modifier l'article", "Edit", new { id = Model.ID })</span>
+            <br />
+            <span>@Html.ActionLink("Retour à la liste des articles", "List")</span>
+
+        }
+        else
+        {
+            <span>@Html.ActionLink("Back to List", "List")</span>
+        }
+    }
+
+</p>
+
+@section Scripts{
+    <script>
+    $(document).ready(function () {
+        $('.btn-delete-com').click(function (event) {
+            var buttonClick = $(event.target).closest('button');
+            var idDelete = $(buttonClick).attr('data-id');
+
+            $.ajax({
+                url: '@Url.Action("Delete","Commentaire")',
+                type: 'POST',
+                data: { id: idDelete },
+                success: function (data) {
+                    if (data.Suppression == "OK") {
+                        $(buttonClick).closest("tr").fadeOut(400, function () {
+                            $(this).remove();
+                        })
+                    }
+                }
+            })
+        })
+    })
+    </script>
+}
 <div>
-    <h4>Article</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Pseudo)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Pseudo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Titre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Titre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Contenu)
-        </dt>
+        
+            <img src="~/Content/Upload/@Html.DisplayFor(model => model.ImageName)" alt="" class="img-responsive" />
 
         <dd>
             @Html.DisplayFor(model => model.Contenu)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ImageName)
-        </dt>
-
-        <dd>
-            <img src="~/Content/Upload/@Html.DisplayFor(model => model.ImageName)" alt="" class="img-rounded" />
-            
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Publication)
-        </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Publication)
@@ -59,33 +71,22 @@
 
         <dd>
             @{
-                    if (Model.EstPublie == true)
-                    {
-                        @ViewBag.DisplayYes;
-                    }
-                    else
-                    {
-                        @ViewBag.DisplayNo;
-                    }
+                if (Model.EstPublie == true)
+                {
+                    @ViewBag.DisplayYes;
                 }
+                else
+                {
+                    @ViewBag.DisplayNo;
+                }
+            }
         </dd>
 
     </dl>
-</div>
-<p>
-    @{ 
+    @if (User.Identity.IsAuthenticated)
+    {
+        { Html.RenderAction("_Create", "Commentaire", new { id = Model.ID }); }
 
-        if(User.Identity.IsAuthenticated && User.Identity.Name == Model.Pseudo)
-        {
-            @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) 
-            <br />
-            @Html.ActionLink("Back to List", "List");
-
-        }
-        else
-        {
-            @Html.ActionLink("Back to List", "List");
-        }
     }
-    
-</p>
+    @{Html.RenderAction("_List", "Commentaire", new { id = Model.ID }); }
+</div>
