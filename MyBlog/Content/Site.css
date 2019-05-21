@@ -128,31 +128,36 @@ textarea {
 
 
 /*--------- Page de détails d'un article-----------*/
-#comments{
+#artOptions {
+    float: right;
+}
+
+.img-responsive {
+    width: 100%;
+}
+
+#artDetails{
+}
+
+#comments {
     display: flex;
     flex-direction: column;
 }
 
-    #comments article {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        padding: 2em 0;
-        border-bottom: 1px solid #808080;
-    }
+#comments article {
+     display: flex;
+     flex-direction: row;
+     justify-content: space-between;
+     align-items: center;
+     padding: 2em 0;
+     border-bottom: 1px solid #808080;
+}
 
 #comments article section {
     width: 70%;
 }
 
-#artOptions {
-    float: right;
-}
 
-.img-responsive{
-    width: 100%;
-}
 
 /*------------Fin Page de détails d'un article--------------*/
 

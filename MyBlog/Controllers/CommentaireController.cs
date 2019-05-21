@@ -65,17 +65,17 @@ namespace MyBlog.Controllers
         [HttpPost, ActionName("_Create")]
         [ValidateAntiForgeryToken]
         //[ChildActionOnly]
-        public ActionResult _Create(int id, [Bind(Include = "Pseudo, Email,Contenu ")] Commentaire com)
+        public ActionResult _Create(int id, [Bind(Include = "Pseudo, Contenu ")] Commentaire com)
         {
 
-            //var user = User.Identity;
-            //ApplicationDbContext context = new ApplicationDbContext();
-            //var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-            //var UserMail = userManager.GetEmail(user.GetUserId());
+            var user = User.Identity;
+            ApplicationDbContext context = new ApplicationDbContext();
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            var UserMail = userManager.GetEmail(user.GetUserId());
             //var userName = User.Identity.GetUserName();
             com.Parent = Bdd.Articles.Find(id);
             //com.Pseudo = userName;
-            //com.Email = UserMail;
+            com.Email = UserMail;
             //com.Parent = Bdd.Articles.Include("Parent").Where(c => c.ID == id).FirstOrDefault();
 
             if (ModelState.IsValid)

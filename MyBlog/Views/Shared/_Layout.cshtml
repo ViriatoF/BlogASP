@@ -7,8 +7,20 @@
     <title>@ViewBag.Title - Mon application ASP.NET</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/tinymce")
     <link href="https://fonts.googleapis.com/css?family=Baloo+Bhai|Roboto:400,700" rel="stylesheet">
+    @using MyBlog.Models
 
+    <script type="text/javascript">
+        tinymce.init({
+            selector: 'textarea'
+        });
+    </script>
+    @{
+        ApplicationDbContext Bdd = new ApplicationDbContext();
+        int ArtNbr = Bdd.Articles.Where(c => c.EstPublie).Count();
+        ViewBag.ArtNbr = ArtNbr;
+    }
 </head>
 <body>
     @{
@@ -36,7 +48,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Tous les articles", "List", "Article")</li>
+                    <li>@Html.ActionLink("Tous les articles ( "+ (int)ViewBag.ArtNbr + " )", "List", "Article")</li>
                     <li>@Html.ActionLink("À propos de", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
