@@ -43,7 +43,7 @@ main h2{
 /*Home/Last Articles/ img*/
 .LastArt header img{
     height: 14em;
-    width: auto;
+    width: 100%;
     text-align: center;
 }
 
@@ -161,3 +161,6 @@ textarea {
 
 /*------------Fin Page de détails d'un article--------------*/
 
+#titleArt:hover{
+    color: red;
+}

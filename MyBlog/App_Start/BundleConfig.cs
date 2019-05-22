@@ -18,8 +18,8 @@ namespace MyBlog
                         "~/Scripts/gridmvc.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/tinymce").Include(
-                        "~/Scripts/tinymce/tinymce/tinymce.min.js",
-                        "~/Scripts/tinymce/tinymce/jquery.tinymce.min.js"));
+                        "~/Scripts/tinymce/jquery.tinymce.min.js",
+                        "~/Scripts/tinymce/tinymce.min.js"));
             // Utilisez la version de développement de Modernizr pour le développement et l'apprentissage. Puis, une fois
             // prêt pour la production, utilisez l'outil de génération à l'adresse https://modernizr.com pour sélectionner uniquement les tests dont vous avez besoin.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(

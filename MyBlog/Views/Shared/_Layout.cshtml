@@ -11,16 +11,21 @@
     <link href="https://fonts.googleapis.com/css?family=Baloo+Bhai|Roboto:400,700" rel="stylesheet">
     @using MyBlog.Models
 
-    <script type="text/javascript">
-        tinymce.init({
-            selector: 'textarea'
-        });
-    </script>
     @{
         ApplicationDbContext Bdd = new ApplicationDbContext();
         int ArtNbr = Bdd.Articles.Where(c => c.EstPublie).Count();
         ViewBag.ArtNbr = ArtNbr;
     }
+
+    @* Utilisation de Tinymce dans une prochaine version *@
+
+    @*<script type="text/javascript">
+        tinymce.init({
+            selector: '#ArtCont',
+            height: 300,
+            menubar: false
+        });
+    </script>*@
 </head>
 <body>
     @{
@@ -60,7 +65,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - MyBlog ASP.NET Application</p>
         </footer>
     </div>
 

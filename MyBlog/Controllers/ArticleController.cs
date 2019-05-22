@@ -37,6 +37,23 @@ namespace MyBlog.Controllers
         }
         #endregion
 
+        #region Vue partielle de mes articles dans mon espace
+        [ChildActionOnly]
+        public ActionResult _MyArticles()
+        {
+            string user = User.Identity.GetUserName();
+            var liste = from c in Bdd.Articles
+                        where c.Pseudo == user
+                        orderby c.Publication descending
+                        select c;
+
+            var countArt = liste.Count();
+            ViewBag.ContArt = countArt;
+
+            return PartialView("_MyArticles", liste);
+        }
+        #endregion
+
         #region ListValidation for admin
         [Authorize(Roles ="Admin")]
         public ActionResult ListValidation()

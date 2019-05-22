@@ -42,16 +42,18 @@ namespace MyBlog.Controllers
             return View("Index");
         }
 
+        [AllowAnonymous]
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "MyBlog Site de présentation";
 
             return View();
         }
 
+        [AllowAnonymous]
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Page de contact";
 
             return View();
         }
